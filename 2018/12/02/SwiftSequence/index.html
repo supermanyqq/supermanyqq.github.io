@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="iOS、前端知识总结">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Swift Sequence（一） - Qyu&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i>  </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/">
+        </div>
+        <div class="name">
+            <i>余桥</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li>
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li>
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#IteratorProtocol"><span class="toc-text">IteratorProtocol</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义一个裴波那契序列："><span class="toc-text">自定义一个裴波那契序列：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代器的值语义"><span class="toc-text">迭代器的值语义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#不要长期存储切片实例"><span class="toc-text">不要长期存储切片实例</span></a></li></ol></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#特定的集合类型"><span class="toc-text">特定的集合类型</span></a></li>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input">
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i>  </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Swift Sequence（一）
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-12-02 19:49:06</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+
+    </div>
+    <div class="post-content ">
+        <p><code>Sequence</code> 协议是集合类型的基础，可以通过实现 <code>Sequence</code> 协议来实现一个自定义的序列类型。满足 <code>Sequence</code> 协议的要求十分简单，只需要提供一个返回<strong>迭代器</strong>(Iterator)的 <code>makeIterator()</code> 方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">protocol Sequence &#123;</span><br><span class="line">	associatetype Iterator: IteratorProtocol</span><br><span class="line">	func makeIterator() -&gt; Iterator</span><br><span class="line">	// ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="IteratorProtocol"><a href="#IteratorProtocol" class="headerlink" title="IteratorProtocol"></a>IteratorProtocol</h2><p>序列通过创建一个迭代器来访问元素，迭代器每次产生一个序列的值，并且当遍历序列时对遍历状态进行管理。在 <code>IteratorProtocol</code> 协议中唯一的一个方法是 <code>next()</code>, 每次调用返回序列的下一个值，当到达序列末尾时返回 <code>nil</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol IteratorProtocol &#123;</span><br><span class="line">	associatetype Element</span><br><span class="line">	mutating func next() -&gt; Element?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历序列最常用、最简单的方式就是 for 循环，从本质上来说，for 循环是下面这种形式的简写:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var iterator = someSequence.makeIterator()</span><br><span class="line">	while let element = iteraotr.next() &#123;</span><br><span class="line">	// do something...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自定义一个裴波那契序列："><a href="#自定义一个裴波那契序列：" class="headerlink" title="自定义一个裴波那契序列："></a>自定义一个裴波那契序列：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">struct FibsIterator: IteratorProtocol &#123;</span><br><span class="line">    var state = (0, 1)</span><br><span class="line">    </span><br><span class="line">    mutating func next() -&gt; Int? &#123;</span><br><span class="line">        let upcomingNumber = state.0</span><br><span class="line">        state = (state.1, state.0 + state.1)</span><br><span class="line">        return upcomingNumber</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct FibsSequence: Sequence &#123;</span><br><span class="line">    func makeIterator() -&gt; FibsIterator &#123;</span><br><span class="line">        return FibsIterator()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let fibs = FibsSequence()</span><br><span class="line">for num in fibs.prefix(10) &#123;</span><br><span class="line">    print(num)</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line"> 0</span><br><span class="line"> 1</span><br><span class="line"> 1</span><br><span class="line"> 2</span><br><span class="line"> 3</span><br><span class="line"> 5</span><br><span class="line"> 8</span><br><span class="line"> 13</span><br><span class="line"> 21</span><br><span class="line"> 34</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<h3 id="迭代器的值语义"><a href="#迭代器的值语义" class="headerlink" title="迭代器的值语义"></a>迭代器的值语义</h3><p><code>FibsIterator</code> 迭代器具有值语义，即如果复制一份迭代器，迭代器的所有状态也会被复制，标准库中的大部分迭代器都具有值语义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var i1 = FibsIterator(upRangeBound: 20)</span><br><span class="line">i1.next() // 0</span><br><span class="line">i1.next() // 1</span><br><span class="line">var i2 = iterator</span><br><span class="line">i1.next() // 1</span><br><span class="line">i2.next() // 2</span><br><span class="line">i2.next() // 1</span><br><span class="line">i2.next() // 2</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">要创建一个不具有值语义的迭代器，可用 `AntIterator` 对迭代器进行封装。`AnyIterator` 进行封装的做法是将迭代器包装到一个内部的对象中，而这个对象是引用类型。</span><br></pre></td></tr></table></figure>
+<p>var i3 = AnyIterator(i1)<br>var i4 = i3<br>i3.next() // 3<br>i4.next() // 5<br>i3.next() // 8<br>i4.next() // 13<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`i3` 和 `i4` 并不是相互独立的，`i3` 不再是一个结构体，将 `i3` 复值给 `i4` 时只是复值了引用，两个迭代器共享一份状态。</span><br><span class="line"></span><br><span class="line"># 无限序列</span><br><span class="line"></span><br><span class="line">序列和集合一个最重要的区别是序列可以是无限的，而集合不行。</span><br><span class="line"></span><br><span class="line">`FibsSequence` 就是一个无限序列，从上方的例子可以看出序列对 `next` 闭包的调用时延迟执行的，即序列的下一个值不会预先被计算，只在调用者需要的时候生成，否则定义完 `FibsSequence` 后程序会因为整数溢出而崩溃。</span><br><span class="line"></span><br><span class="line"># 不稳定序列</span><br><span class="line"></span><br><span class="line">序列和集合另一个重要的区别是序列并不保证可以被多次遍历，也就是说 `Sequence` 协议并不保证在迭代后元素是否销毁。</span><br></pre></td></tr></table></figure></p>
+<p>for element in sequence {<br>    // do something<br>}<br>for element in sequence {<br>    // 未定义行为<br>}</p>
+<p>一个非集合的序列可能会在第二次 for-in 循环时产生随机的序列元素<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">	</span><br><span class="line"># 栗子</span><br><span class="line"></span><br><span class="line">用枚举实现一个单向链表</span><br><span class="line"></span><br><span class="line">一个链表的节点只有两种可能，要么它是一个节点，要么代表链表的结尾，So 可以这样来定义链表：</span><br></pre></td></tr></table></figure></p>
+<p>enum List<element> {<br>    case end<br>    indirect case node(Element, next: List<element>)<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">由于枚举是值类型，不能循环引用自身，故用 `indirect` 关键字来定义枚举成员告诉编译器将 `node` 当做引用，这样就可以循环引用自己了。尽管 `node` 会被当做引用，但这并不会改变枚举成员值类型的本质。</span><br><span class="line"></span><br><span class="line">为链表创建一个添加方法：</span><br></pre></td></tr></table></figure></element></element></p>
+<p>extension List {<br>    func cons(_ x: Element) -&gt; List {<br>        return .node(x, next: self)<br>    }<br>}<br>// 一个拥有三个元素的链表<br>let list = List.end.cons(1).cons(2).cons(3)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">实现 `ExpressibleByArrayLiteral` 以便用数组字面量来初始化链表</span><br></pre></td></tr></table></figure>
+<p>extension List: ExpressibleByArrayLiteral {<br>    init(arrayLiteral elements: Element…) {<br>        self = elements.reversed().reduce(.end){result, element in<br>            result.cons(element)<br>        }<br>    }<br>}</p>
+<p>var list2: List = [1, 2, 3] </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">链表其实也是一个栈，为链表实现 `push` 和 `pop` 方法：</span><br></pre></td></tr></table></figure>
+<p>extension List {<br>    func push(_ x: Element) {<br>        self.cons(x)<br>    }<br>    mutating func pop() -&gt; Element? {<br>        switch self {<br>        case .end:<br>            return nil<br>        case let .node(x, next: trail):<br>            self = trail<br>            return x<br>        }<br>    }<br>}</p>
+<p>var list3: List = [1, 2, 3]</p>
+<p>list3.pop() // 1<br>list3.pop() // 2<br>list3.pop() // 3<br>list3.pop() // nil</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">现在让 `List` 遵守 `Sequence` 协议就很简单了，我们只需要实现一个 `next` 方法即可同时遵守 `IteratorProtocol` 和 `Sequence` 协议</span><br></pre></td></tr></table></figure>
+<p>extension List: IteratorProtocol, Sequence {<br>    mutating func next() -&gt; Element? {<br>        return pop()<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">现在就可以在 `List` 上使用 `for-in` 了</span><br></pre></td></tr></table></figure></p>
+<p>var list: List = [1, 2, 3, 4]<br>for element in list {<br>    print(element)<br>}<br>// 1<br>// 2<br>// 3<br>// 4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Collection</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">`Collection` 协议建立在 `Sequence` 的基础上。与序列不同 `Collection` 协议保证了集合类型的稳定性。遵守 `Collection` 协议的集合类型即指那些稳定的有限的序列，可以被多次遍历并保持一致。</span><br><span class="line"></span><br><span class="line">## 自定义集合类型</span><br><span class="line"></span><br><span class="line">下面以实现一个 FIFO 的队列为例，展示如何自定义集合类型。FIFO 队列我们可以用 `Array` 的 `push` 和 `remove(at: 0)` 来实现，但是因为数组中的元素是存储在一段连续的内存中，所以移除非尾部元素的时候其他元素都要移动去填补空白，这个操作的复杂度是 `O(n)`。So，下面我们实现一个更合理的队列类型。</span><br><span class="line"></span><br><span class="line">**第一步，定义一个协议来描述队列到底是什么**</span><br></pre></td></tr></table></figure></p>
+<p>protocol Queue {<br>    // 队列中元素类型<br>    associatedtype Element<br>    // 入队一个元素<br>    mutating func enqueue(_ newElement: Element)<br>    // 出队一个元素<br>    mutating func dequeue()<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如上，`Queue` 协议只是定义了一个队列的基本属性，并没有定义这是一个先进先出队列，还是一个后进先出队列。</span><br><span class="line"></span><br><span class="line">**第二步，实现队列**</span><br></pre></td></tr></table></figure></p>
+<p>struct FIFOQueue<element>: Queue {<br>    private var left: [Element] = []<br>    private var right: [Element] = []<br>    /// 将元素添加到队列末尾<br>    /// - 复杂度： O(1)<br>    mutating func enqueue(_ newElement: Element) {<br>        right.append(newElement)<br>    }<br>    /// 从队列前端移除一个元素<br>    /// - 复杂度：平摊O(1)<br>    mutating func dequeue() -&gt;Element? {<br>        if left.isEmpty {<br>            left = right.reversed()<br>            right.removeAll()<br>        }<br>        return left.popLast()<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`dequeue` 方法中包含一个复杂度为 O(n) 的 `reversed` 操作，对于单个元素的操作来说可能耗时会长一些，但是对于非常多的 `push` 和 `pop` 操作来说，取出一个数的[平摊耗时](https://en.wikipedia.org/wiki/Amortized_analysis)是一个常数。</span><br><span class="line"></span><br><span class="line">**第三步，遵守 `Collection` 协议**</span><br><span class="line"></span><br><span class="line">目前 Swift 4.2 版本中 `Collection` 协议有7个属性，5个关联类型，11个实例方法，和两个下标方法。所幸其中大部分属性、方法都有默认的实现，要满足 `Collection` 协议，最少的情况下你只需满足以下条件：</span><br><span class="line"></span><br><span class="line">*  startIndex 和 endIndex 属性</span><br><span class="line">*  能够读取类型中元素的下标方法</span><br><span class="line">*  集合索引之间步进的 index(after:) 方法</span><br><span class="line"></span><br><span class="line">最后我们需要实现的方法和属性有：</span><br></pre></td></tr></table></figure></element></p>
+<p>protocol Collection: Sequence {<br>    /// 一个表示集合中位置的类型<br>    /// 不需要显示的申明，Swift 可以从属性和方法的定义中推断出来<br>    associatedtype Index: Comparable<br>    /// 一个非空集合中首个元素的位置<br>    var startIndex: Index { get }<br>    /// 集合中超过末位的位置—也就是比最后一个有效下标值大 1 的位置<br>    var endIndex: Index { get }<br>    /// 返回在给定索引之后的那个索引值<br>    func index(after i: Index) -&gt; Index<br>    /// 访问特定位置的元素<br>    subscript(position: Index) -&gt; Element { get }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">让 `FIFOQueue` 遵守 `Collection` 协议</span><br></pre></td></tr></table></figure></p>
+<p>extension FIFOQueue: Collection {<br>    public var startIndex: Int {<br>        return 0<br>    }<br>    public var endIndex: Int {<br>        return left.count + right.count<br>    }<br>    public func index(after i: Int) -&gt; Int {<br>        precondition(i &lt; endIndex)<br>        return i + 1<br>    }<br>    public subscript(position: Int) -&gt; Element {<br>        precondition((0..&lt;endIndex).contains(position), “下标越界”)<br>        if position &lt; left.endIndex {<br>            return left[left.count - position - 1]<br>        } else {<br>            return right[position - left.count]<br>        }<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**最后，遵守 `ExpressibleByArrayLiteral` 协议**</span><br><span class="line"></span><br><span class="line">自定义集合类型时，最好都实现一下 `ExpressibleByArrayLiteral` 协议，方便用数组字面量来创建类型。</span><br></pre></td></tr></table></figure></p>
+<p>extension FIFOQueue: ExpressibleByArrayLiteral {<br>    public init(arrayLiteral elements: Element…) {<br>        left = elements.reversed()<br>        right = []<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">简单的应用：</span><br></pre></td></tr></table></figure></p>
+<p>var q: FIFOQueue = [1, 3, 5, 4, 6]<br>q.dequeue() // 1<br>q.enqueue(2) // left: [6, 4, 5, 3] right: [2]<br>q.dequeue() // 3<br>q.enqueue(9) // left: [6, 4, 5] right: [2, 9]<br>let sortedQ = q.sorted() // [2, 4, 5, 6, 9]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"># 索引</span><br><span class="line"></span><br><span class="line">集合类型的 `index` 不一定都是整数类型，实现了 `Comparable` 协议的类型都可以作为集合类型 `index`。</span><br><span class="line"></span><br><span class="line">当集合发生改变时，索引可能会失效。有以下两种情况：</span><br><span class="line"></span><br><span class="line">* 索引本身仍是有效的，但是指向的是另外的元素。</span><br><span class="line">* 索引本身已失效，使用它访问集合会造成崩溃。</span><br></pre></td></tr></table></figure></p>
+<p>var arr = [1, 2, 3, 4, 5]<br>let secondIndex = arr.index(after: arr.startIndex)</p>
+<p>var val = arr[secondIndex] // 2<br>var lastVal = arr[lastIndex] // 5</p>
+<p>arr.insert(9, at: 1)<br>val = arr[secondIndex] // 9</p>
+<p>let lastIndex = arr.index(before: arr.endIndex)<br>arr.removeLast()<br>lastVal = arr[lastIndex] // 数组越界<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"># 切片</span><br><span class="line"></span><br><span class="line">所有集合类型都有切片操作的默认实现，且有一个接受 `Range&lt;index&gt;` 作为参数的下标方法。</span><br></pre></td></tr></table></figure></p>
+<p>var arr = [1, 2, 3, 4, 5]<br>// slice 的类型不是 Array<int> 而是 ArraySlice<int><br>var slice = arr[1..&lt;4] // [2, 3, 4]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">标准库中实现了一些常用的快速获取切片的方法，如：`dropFirst()`、`dropLast()`、`suffix()`、`prefix()`等。</span><br></pre></td></tr></table></figure></int></int></p>
+<p>var arr = [1, 2, 3, 4, 5]<br>let dropFirst = arr.dropFirst() // [2, 3, 4, 5]<br>let dropLast = arr.dropLast() // [1, 2, 3, 4]<br>let subffix2 = arr.suffix(2) // [4, 5]<br>let subffixFrom = arr.suffix(from: 1) // [2, 3, 4, 5]<br>let prefix = arr.prefix(3) // [1, 2, 3]<br>let prefixUpTo = arr.prefix(upTo: 3) // [1, 2, 3]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 切片与原集合共享索引</span><br><span class="line"></span><br><span class="line">集合类型和它的切片拥有相同的索引。只要集合和它的切片在创建后没有改变，切片中某个索引位置上的元素，应当也存在于原集合中同样的索引位置上。这就引出一个问题，一个集合的索引不需要从0开始。</span><br></pre></td></tr></table></figure></p>
+<p>var arr = [1, 2, 3, 4, 5]<br>var slice = arr.dropFirst()<br>slice.startIndex // 1<br><code>`</code></p>
+<p>这种情况下，访问 <code>slice[0]</code> 会崩溃，<code>slice</code> 的开始索引不再是0而是1。所以，不要假设集合类型的开始索引总是0，始终使用 <code>startIndex</code> 和 <code>endIndex</code> 访问集合的开始、结束索引。</p>
+<h5 id="不要长期存储切片实例"><a href="#不要长期存储切片实例" class="headerlink" title="不要长期存储切片实例"></a>不要长期存储切片实例</h5><p>切片会持有原集合整个存储的引用，而不仅仅是切片需要展示的内容，即使在原集合的生命周期结束后切片仍会持有原集合整个存储的引用。长期存储切片实例，切片的生命周期比原集合久，当原集合生命周期结束后会造成内存泄漏。</p>
+<h2 id="特定的集合类型"><a href="#特定的集合类型" class="headerlink" title="特定的集合类型"></a>特定的集合类型</h2><p><code>Collection</code> 协议没有提供向后移动索引的方法，也没有提供像是插入、移除或者替换集合元素这样的方法。标准库中，有四个专门的集合类型协议来对 <code>Collection</code> 进行扩展。</p>
+<ul>
+<li>BidirectionalCollection 一个即支持前向又支持后向遍历的集合</li>
+<li>RandomAccessCollection 一个支持高效随机存取索引遍历的集合</li>
+<li>MutableCollection 一个支持下标赋值的集合</li>
+<li>RangeReplaceableCollection 一个支持将任意子范围的元素用别的集合中的元素记性替换的集合</li>
+</ul>
+
+        
+        <br>
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>

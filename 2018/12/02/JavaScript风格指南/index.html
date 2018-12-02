@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="iOS、前端知识总结">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        JavaScript风格指南 - Qyu&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i>  </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/">
+        </div>
+        <div class="name">
+            <i>余桥</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li>
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li>
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#编码规范"><span class="toc-text">编码规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判空"><span class="toc-text">判空</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#let、var、const"><span class="toc-text">let、var、const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免不必要的三元表达式"><span class="toc-text">避免不必要的三元表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不要直接调用Object-prototype上的方法，比如，hasOwnProperty，propertyIsEnumerable和isPrototypeOf"><span class="toc-text">不要直接调用Object.prototype上的方法，比如，hasOwnProperty，propertyIsEnumerable和isPrototypeOf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call、apply、bind"><span class="toc-text">call、apply、bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表达式解构"><span class="toc-text">表达式解构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#箭头函数"><span class="toc-text">箭头函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#尽量使用高阶函数代替-for-in-和-for-of"><span class="toc-text">尽量使用高阶函数代替 for-in 和 for-of</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块化编程"><span class="toc-text">模块化编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6-模块"><span class="toc-text">ES6 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#export-命令"><span class="toc-text">export 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#import-命令"><span class="toc-text">import 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#export-default-命令"><span class="toc-text">export default 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#export-和-export-default-区别"><span class="toc-text">export 和 export default 区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS"><span class="toc-text">CommonJS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD"><span class="toc-text">AMD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块化编码建议"><span class="toc-text">模块化编码建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise"><span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本用法"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链式调用"><span class="toc-text">链式调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-prototype-finally"><span class="toc-text">Promise.prototype.finally()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-all"><span class="toc-text">Promise.all()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-race"><span class="toc-text">Promise.race()</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input">
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i>  </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        JavaScript风格指南
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-12-02 19:36:06</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+
+    </div>
+    <div class="post-content ">
+        <h2 id="编码规范"><a href="#编码规范" class="headerlink" title="编码规范"></a>编码规范</h2><h3 id="判空"><a href="#判空" class="headerlink" title="判空"></a>判空</h3><ul>
+<li>object -&gt; true </li>
+<li>Undefined -&gt; false</li>
+<li>Null -&gt; false</li>
+<li>Booleans -&gt; </li>
+<li>Number -&gt; +0,-0,NaN：false， 其他值：true</li>
+<li>String -&gt; 空字符串’’ : flase，其他值：true</li>
+</ul>
+<p>简化判空操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">let a</span><br><span class="line">if(a != null &amp;&amp; typeof(a) != undefined &amp;&amp; a != &apos;&apos;)&#123;</span><br><span class="line">    // a有内容时做一些处理  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">if (!!a) &#123;</span><br><span class="line">	// a有内容时做一些处理  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">or </span><br><span class="line"></span><br><span class="line">if (a) &#123;</span><br><span class="line">	// a有内容时做一些处理 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：空对象 <code>{}</code>、空数组 <code>[]</code> 均会返回 <code>true</code></p>
+</blockquote>
+<h3 id="let、var、const"><a href="#let、var、const" class="headerlink" title="let、var、const"></a>let、var、const</h3><ul>
+<li>变量用<code>let</code>声明，常量用<code>const</code>声明，避免使用<code>var</code></li>
+<li><code>let</code>、<code>const</code>都是块级作用域</li>
+</ul>
+<h3 id="避免不必要的三元表达式"><a href="#避免不必要的三元表达式" class="headerlink" title="避免不必要的三元表达式"></a>避免不必要的三元表达式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">const foo = a ? a : b</span><br><span class="line">const bar = c ? true : false</span><br><span class="line">const baz = c ? false : true</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">const foo = a || b</span><br><span class="line">const bar = !!c</span><br><span class="line">const baz = !c</span><br></pre></td></tr></table></figure>
+<h3 id="不要直接调用Object-prototype上的方法，比如，hasOwnProperty，propertyIsEnumerable和isPrototypeOf"><a href="#不要直接调用Object-prototype上的方法，比如，hasOwnProperty，propertyIsEnumerable和isPrototypeOf" class="headerlink" title="不要直接调用Object.prototype上的方法，比如，hasOwnProperty，propertyIsEnumerable和isPrototypeOf"></a>不要直接调用<code>Object.prototype</code>上的方法，比如，<code>hasOwnProperty</code>，<code>propertyIsEnumerable</code>和<code>isPrototypeOf</code></h3><blockquote>
+<p><code>Object.prototype</code> 上的方法可能会被错误的覆盖</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// bad </span><br><span class="line">console.log(object.hasOwnProperty(key))</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">console.log(Object.prototype.hasOwnProperty.call(object, key))</span><br><span class="line"></span><br><span class="line">let a = &#123;</span><br><span class="line">	key: 1,</span><br><span class="line">	hasOwnProperty () &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(a.hasOwnProperty(&apos;key&apos;)) // false</span><br><span class="line">console.log(Object.prototype.hasOwnProperty.call(a, &apos;key&apos;)) // true</span><br></pre></td></tr></table></figure>
+<h3 id="call、apply、bind"><a href="#call、apply、bind" class="headerlink" title="call、apply、bind"></a><code>call</code>、<code>apply</code>、<code>bind</code></h3><p>每个函数都包含两个非继承而来的方法：<code>call()</code>和<code>apply()</code>。这两个函数的用途都是在特定的作用域中调用函数，等同于设置函数体内<code>this</code>对象的值。</p>
+<ul>
+<li><code>apply()</code>方法接收两个参数，一个是函数运行的作用域，另一个是参数数组。第二个参数可以是<code>Array</code>类型，也可以是<code>arguments</code>对象。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function sum (a, b) &#123;</span><br><span class="line">	return a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function callSum (a, b) &#123;</span><br><span class="line">	return sum.apply(this, arguments)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function callSum2 (a, b) &#123;</span><br><span class="line">	return sum.apply(this, [a, b])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(callSum(1,2)) // 3</span><br><span class="line">console.log(callSum2(1,2)) // 3</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>call()</code>方法与<code>apply()</code>的作用相同，区别在于传递给函数的参数必须逐个列举出来</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function callSum (a, b) &#123;</span><br><span class="line">	return sum.call(this, a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(callSum(1,2)) // 3</span><br></pre></td></tr></table></figure>
+<p>应用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">window.color = &apos;red&apos;</span><br><span class="line">const obj = &#123;</span><br><span class="line">	color: &apos;orange&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function sayColor () &#123;</span><br><span class="line">	console.log(this.color)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sayColor() // red</span><br><span class="line">sayColor.call(this) // red</span><br><span class="line">sayColor.call(window) // red</span><br><span class="line">sayColor.call(obj) // orange</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>bind()</code>函数在 ES5 中定义的，这个方法会创建一个函数的实例，其<code>this</code>值会被绑定到传给<code>bind()</code>函数的值。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">window.color = &apos;red&apos;</span><br><span class="line">const obj = &#123;</span><br><span class="line">	color: &apos;orange&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function sayColor () &#123;</span><br><span class="line">	console.log(this.color)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const objSayColor = sayColor.bind(obj)</span><br><span class="line"></span><br><span class="line">sayColor() // red</span><br><span class="line">objSayColor() // orange</span><br></pre></td></tr></table></figure>
+<h3 id="表达式解构"><a href="#表达式解构" class="headerlink" title="表达式解构"></a>表达式解构</h3><blockquote>
+<p>本质上，这种写法是一种”模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应的值，解构不成功变量的值等于 undefined。</p>
+</blockquote>
+<ul>
+<li><p>数组解构赋值</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 基本用法</span><br><span class="line">let [a, b] = [1, 2, 3]</span><br><span class="line">console.log(a, b) // 1 2</span><br><span class="line"></span><br><span class="line">// 多维数组</span><br><span class="line">let [c, [d]] = [1, [4, 5]]</span><br><span class="line">console.log(c, d) // 1, 4</span><br></pre></td></tr></table></figure>
+<p>  指定默认值</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let [a, b] = [1]</span><br><span class="line">console.log(a, b) // 1, undefined</span><br><span class="line"></span><br><span class="line">let [a, b = 2] = [1]</span><br><span class="line">console.log(a, b) // 1, 2</span><br><span class="line"></span><br><span class="line">let [a, b = 2] = [1, undefined]</span><br><span class="line">console.log(a, b) // 1, 2</span><br><span class="line"></span><br><span class="line">let [a, b = 2] = [1, null]</span><br><span class="line">console.log(a, b) // 1, null</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：ES6 中使用严格相等运算符<code>===</code>判断是否相等，所以只有当一个数组成员严格等于 undefined 时默认值才会生效。例如，有一个数组成员为 null 则默认值会生效，匹配后的值为 null。</p>
+</blockquote>
+</li>
+<li><p>对象解构赋值</p>
+<p>  对象解构与数组解构一个重要的不同在于，数组元素按顺序排列，变量的取值由位置决定，而对象的属性没有顺序，变量名必须与属性名相同，才能取到值。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let &#123;key1, key2&#125; = &#123;key1: &apos;first key&apos;, key2: &apos;second key&apos;&#125;</span><br><span class="line">console.log(key1, key2) // first key second key</span><br></pre></td></tr></table></figure>
+<p>  嵌套对象解构</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let &#123;a, b: &#123;c&#125;&#125; = &#123;a: 1, b: &#123;c: 3&#125;&#125;</span><br><span class="line">console.log(a, c) // 1 3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数参数解构赋值</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">function getFullName(user) &#123;</span><br><span class="line">  const firstName = user.firstName;</span><br><span class="line">  const lastName = user.lastName;</span><br><span class="line"></span><br><span class="line">  return `$&#123;firstName&#125; $&#123;lastName&#125;`;</span><br><span class="line">&#125;</span><br><span class="line">// good</span><br><span class="line">function getFullName(&#123; firstName, lastName &#125;) &#123;</span><br><span class="line">  return `$&#123;firstName&#125; $&#123;lastName&#125;`;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数需返回多个值且不在关心顺序时，使用对象解构返回，而不是数组。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">function processInput(input) &#123;</span><br><span class="line">  return [left, right, top, bottom];</span><br><span class="line">&#125;</span><br><span class="line">// 需要考虑返回值的顺序</span><br><span class="line">const [left, __, top] = processInput(input);</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">function processInput(input) &#123;</span><br><span class="line">  return &#123; left, right, top, bottom &#125;;</span><br><span class="line">&#125;</span><br><span class="line">// 不需要考虑顺序，需要哪个值取哪个</span><br><span class="line">const &#123; left, top &#125; = processInput(input);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><ul>
+<li><p>几种常见写法</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 只有一个参数可省略括号</span><br><span class="line">// 函数体值一行代码可省略大括号和return</span><br><span class="line">1.x =&gt; x + &apos;world&apos;</span><br><span class="line">2.(x, y) =&gt; x + y</span><br><span class="line">3.x =&gt; &#123;</span><br><span class="line">	return x + &apos;world&apos;</span><br><span class="line">&#125;</span><br><span class="line">4.(x, y) =&gt; &#123;</span><br><span class="line">	reutrn x + y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>箭头函数的上下文（<code>this</code>）会绑定为定义函数所在作用域的上下文</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">	hello: &apos;object hello&apos;,</span><br><span class="line">	sayHello () &#123;</span><br><span class="line">	const temp = () =&gt; &#123;</span><br><span class="line">			return this.hello</span><br><span class="line">		&#125;</span><br><span class="line">		return temp</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">window.hello = &apos;window hello&apos;</span><br><span class="line">window.sayHello = obj.sayHello()</span><br><span class="line">window.sayHello() // object hello</span><br></pre></td></tr></table></figure>
+<p>  上面的代码等价于：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">	hello: &apos;object hello&apos;,</span><br><span class="line">	sayHello () &#123;</span><br><span class="line">	const temp = (function () &#123;</span><br><span class="line">			return this.hello</span><br><span class="line">		&#125;).bind(this)</span><br><span class="line">	</span><br><span class="line">		return temp</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：箭头函数对上下文的绑定是强制性的，无法通过<code>apply</code>和<code>call</code>改变其上下文。</p>
+</blockquote>
+</li>
+<li><p>使用匿名函数时，使用箭头函数定义。</p>
+<blockquote>
+<p>箭头函数的上下文绑定特性，绑定的<code>this</code>通常都是我们希望的。</p>
+</blockquote>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">[1, 2, 3].map(function (x) &#123;</span><br><span class="line">	return x * x</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">[1, 2, 3,].map((x) =&gt; &#123;</span><br><span class="line">	return x * x</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="尽量使用高阶函数代替-for-in-和-for-of"><a href="#尽量使用高阶函数代替-for-in-和-for-of" class="headerlink" title="尽量使用高阶函数代替 for-in 和 for-of"></a>尽量使用高阶函数代替 <code>for-in</code> 和 <code>for-of</code></h3><blockquote>
+<p>高阶函数相比 <code>for-in</code> 和 <code>for-of</code> 具有更高的可读性，且减少了一些边界条件的考虑。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">const numbers = [1, 2, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">// bad</span><br><span class="line">let sum = 0</span><br><span class="line">for (let num of numbers) &#123;</span><br><span class="line">  sum += num</span><br><span class="line">&#125;</span><br><span class="line">sum === 15</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">let sum = 0</span><br><span class="line">numbers.forEach((num) =&gt; &#123;</span><br><span class="line">  sum += num</span><br><span class="line">&#125;);</span><br><span class="line">sum === 15</span><br><span class="line"></span><br><span class="line">// best</span><br><span class="line">const sum = numbers.reduce((total, num) =&gt; total + num, 0)</span><br><span class="line">sum === 15</span><br><span class="line"></span><br><span class="line">// bad</span><br><span class="line">const increasedByOne = []</span><br><span class="line">for (let i = 0; i &lt; numbers.length; i++) &#123;</span><br><span class="line">  increasedByOne.push(numbers[i] + 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">const increasedByOne = []</span><br><span class="line">numbers.forEach((num) =&gt; &#123;</span><br><span class="line">  increasedByOne.push(num + 1)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// best</span><br><span class="line">const increasedByOne = numbers.map(num =&gt; num + 1)</span><br></pre></td></tr></table></figure>
+<h2 id="模块化编程"><a href="#模块化编程" class="headerlink" title="模块化编程"></a>模块化编程</h2><p>在 ES6 之前，javaScript 一直没有模块体系，无法将一个大程序拆分成互相依赖的小文件，因此javaScript 社区制定了一些模块化加载方案，最主要的就是 <code>CommonJS</code> 和 <code>AMD</code> 前者用于服务器，后者用于浏览器。ES6 在语言层面上实现了模块功能，而且相当简单完全可以取代 <code>CommonJS</code> 和 <code>AMD</code> 规范。</p>
+<h3 id="ES6-模块"><a href="#ES6-模块" class="headerlink" title="ES6 模块"></a>ES6 模块</h3><p>ES6 模块自动采用严格模式，不管是否在模块头部加上 <code>&quot;use strict&quot;</code></p>
+<h4 id="export-命令"><a href="#export-命令" class="headerlink" title="export 命令"></a>export 命令</h4><p>模块功能主要由两个命令构成：export和import。export命令用于规定模块的对外接口，import命令用于输入其他模块提供的功能。</p>
+<p>一个模块就是一个单独的文件，文件内定义的所有变量都是私有的，外部无法获取。如果希望外部读取模块的某个变量，只能通过 <code>export</code> 导出改变量。</p>
+<p>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// moduleA.js</span><br><span class="line">export let name = &apos;first name&apos;</span><br><span class="line">export let age = 18</span><br></pre></td></tr></table></figure>
+<p>除了上述写法一个一个导出变量，还有另外一种写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let name = &apos;first name&apos;</span><br><span class="line">let age = 19</span><br><span class="line"></span><br><span class="line">export &#123; name, age &#125;</span><br></pre></td></tr></table></figure>
+<p><code>export</code> 命令除了导出变量，还可以导出函数或类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export function sayHello () &#123;</span><br><span class="line">	console.log(&apos;hello&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般情况导出的变量就是本来定义的名字，如果希望重命名可以通过 <code>as</code> 关键字实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let name = &apos;first name&apos;</span><br><span class="line"></span><br><span class="line">export &#123; name as firstName &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="import-命令"><a href="#import-命令" class="headerlink" title="import 命令"></a>import 命令</h4><p>使用 <code>export</code> 定义了模块的接口后，其他 JS 文件可通过 <code>import</code> 命令引入这个模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// main.js</span><br><span class="line"></span><br><span class="line">import &#123;name, age&#125; from &apos;./moduleA.js&apos;</span><br></pre></td></tr></table></figure>
+<p><code>import</code> 命令接受一对大括号，在括号里指定要从其他模块导入的变量名，必须与模块中导出的名称相同。</p>
+<p>如果想对 <code>import</code> 的变量重新命名，可通过 <code>as</code> 关键字实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; name as firstName &#125; from &apos;./moduleA.js&apos;</span><br></pre></td></tr></table></figure>
+<p><code>import</code> 命名是在编译阶段执行的，所以不能使用表达式和变量，这种在运行时才能得到结果的语法结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 错误</span><br><span class="line">import &#123;&apos;n&apos; + &apos;ame&apos;&#125; from &apos;./moduleA.js&apos;</span><br><span class="line"></span><br><span class="line">// 错误</span><br><span class="line">if (condition === 1) &#123;</span><br><span class="line">	import &#123;name&#125; from &apos;./moduleA.js&apos;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	import &#123;name&#125; from &apos;./moduleB.js&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了加载某个指定的输出值，还可通过 <code>*</code> 将模块的所有输出导出到一个对象上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import * as obj from &apos;./moduleA.js&apos;</span><br><span class="line"></span><br><span class="line">console.log(obj.name) // first name</span><br><span class="line">console.log(obj.age)  // 18</span><br></pre></td></tr></table></figure>
+<h4 id="export-default-命令"><a href="#export-default-命令" class="headerlink" title="export default 命令"></a>export default 命令</h4><p><code>export default</code> 为模块指定默认输出，一个文件或模块中只能有一个 <code>export default</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// export-default.js</span><br><span class="line"></span><br><span class="line">export default function () &#123;</span><br><span class="line">	console.log(&apos;hello&apos;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// or</span><br><span class="line"></span><br><span class="line">const sayHello = function () &#123;</span><br><span class="line">	console.log(&apos;hello&apos;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default sayHello</span><br></pre></td></tr></table></figure>
+<p><code>import</code> 引入模块默认输出是不需要大括号，且可以任意指定模块默认输出的名称，不需要知道原模块中输出的名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import say from &apos;./export-default.js&apos;</span><br><span class="line"></span><br><span class="line">say() // hello</span><br></pre></td></tr></table></figure>
+<p>本质上 <code>export default</code> 就是输出一个叫做 <code>default</code> 的变量或者方法，所以<code>export default</code> 后面不能跟变量申明语句，直接导出变量表达式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 正确</span><br><span class="line">export let a = 4</span><br><span class="line">// 错误</span><br><span class="line">export default let a = 4</span><br><span class="line">// 正确</span><br><span class="line">let a = 4</span><br><span class="line">export default a</span><br></pre></td></tr></table></figure>
+<h4 id="export-和-export-default-区别"><a href="#export-和-export-default-区别" class="headerlink" title="export 和 export default 区别"></a>export 和 export default 区别</h4><ul>
+<li>export与export default均可用于导出常量、函数、文件、模块等</li>
+<li>在一个文件或模块中，export、import可以有多个，export default仅有一个</li>
+<li>通过export方式导出，在导入时要加{ }，export default则不需要</li>
+<li>export能直接导出变量表达式，export default不行</li>
+</ul>
+<h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><p>CommonJS 是以在浏览器环境之外构建 JavaScript 生态系统为目标而产生的项目，比如服务器和桌面应用。</p>
+<p>CommonJS 是一种规范，为了解决 JavaScript 作用域问题而定义的模块形式。可以时每个模块在自身的命名空间中执行。模块必须通过<code>module.exports</code>到处对外的变量或接口，荣拓<code>require()</code>来导入模块。node.js 模块系统即参照 CommonJS 规范实现的。</p>
+<p>浏览器不兼容 CommonJS 的根本原因是缺少四个 Node.js 的环境变量：</p>
+<ul>
+<li>module</li>
+<li>exports</li>
+<li>require</li>
+<li>global</li>
+</ul>
+<p>要在浏览器环境兼容 CommonJS 可以使用一些转换工作，如 <code>Browserify</code>, <code>Browserify</code>是最常用的 CommonJS 格式转换工具。</p>
+<p>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// moduleA.js</span><br><span class="line">module.exports = &#123;</span><br><span class="line">	a: &apos;a&apos;,</span><br><span class="line">	b: &apos;b&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// moduleB.js</span><br><span class="line">const mod = require(&apos;./moduleA.js&apos;)</span><br><span class="line">const aFromModuleA = mod.a</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>CommonJS 是同步加载模块</p>
+</blockquote>
+<h3 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h3><p>AMD 是为浏览器环境设计的，定义了一套 JavaScript 模块依赖异步加载标准，来解决同步加载的问题。</p>
+<p>模块通过 <code>define</code> 函数定义在闭包中，格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(id?: String, dependencies?: String[], factory: Function|Object)</span><br></pre></td></tr></table></figure>
+<p><code>id</code> 是模块的名字，可选参数。<code>dependencies</code> 指定了所需要依赖的模块列表，是一个数组，也是可选参数。每个模块的输出将作为参数一次传入 <code>factory</code>。如果没有指定 <code>dependencies</code> 它的默认值是 <code>[&quot;require&quot;, &quot;exports&quot;, &quot;module&quot;]</code></p>
+<p><code>factory</code> 是模块的具体实现，可以是一个函数或一个对象。如果是函数，那么函数的返回值就是模块的输出接口或值。</p>
+<p>定义一个模块，依赖<code>jQuery</code>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;myModule&apos;, [&quot;jQuery&quot;], function ($) &#123;</span><br><span class="line">	$(&apos;body&apos;).text(&apos;hello world!&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在模块内部引用依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;myModule&apos;, function (require) &#123;</span><br><span class="line">	const $ = require(&apos;jQuery&apos;)</span><br><span class="line">	$(&apos;body&apos;).text(&apos;hello world&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>具体应用可看 <code>RequireJS</code></p>
+<h3 id="模块化编码建议"><a href="#模块化编码建议" class="headerlink" title="模块化编码建议"></a>模块化编码建议</h3><ul>
+<li>总是使用<code>import/export</code>，不再使用 <code>CommonJS</code>、<code>AMD</code>等模块化方案。</li>
+<li><p>不用通配符<code>import</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">import * as Module from &apos;./moduleA&apos;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">import Module from &apos;./moduleA&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从同一个 module <code>import</code> 多个值写在一行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">import foo from &apos;foo&apos;</span><br><span class="line">import &#123; named1, named2 &#125; from &apos;foo&apos;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">import foo, &#123; named1, named2 &#125; from &apos;foo&apos;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">import foo, &#123;</span><br><span class="line">  named1,</span><br><span class="line">  named2,</span><br><span class="line">&#125; from &apos;foo&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>只导出常量，不要导出可变绑定。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">let foo = 3;</span><br><span class="line">export &#123; foo &#125;</span><br><span class="line"></span><br><span class="line">// good</span><br><span class="line">const foo = 3;</span><br><span class="line">export &#123; foo &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p><code>Promise</code> 是 <code>JavaScript</code> 异步编程的一种解决方案，ES6 将其写入了语言标准，提供了原生的<code>Promise</code>对象。</p>
+<p><code>Promise</code> 设计上具有原子性，即只有两种状态，未开始和结束（成功和失败均是结束），也就是说 <code>Promise</code> 一但开始便不能中途取消，会得到一个结束状态成功或失败。未开始、成功、失败这三个状态分别用 <code>pending</code>、<code>fulfilled</code>和<code>rejected</code>表示。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>Promise</code> 构造函数接收一个函数参数，函数有两个参数<code>resolve</code>和<code>reject</code>，<code>resolve</code> 用于将<code>Promise</code>对象的状态从<em>未开始</em> 变为 <em>成功</em>，<code>reject</code> 用于将<code>Promise</code>对象的状态从 <em>未开始</em> 变为 <em>失败</em>。要创建一个异步函数只需返回一个<code>Promise</code>对象即可。</p>
+<p>如下，创建一个异步函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function fetchData() &#123;</span><br><span class="line">	return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">		if (/*异步操作成功*/) &#123;</span><br><span class="line">			resolve(value)</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			reject(error)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>Promise</code> 的参数建议用箭头函数来定义，利用箭头函数的上下文绑定将<code>this</code>绑定为函数所在的作用域，这通常是我们所期望的。</p>
+</blockquote>
+<p>创建异步函数后，调用时可用<code>.then()</code>来添加<code>resolve</code>时的回调函数，<code>.catch</code>添加<code>reject</code>时的回调函数。<code>resolve</code> 中的参数会传递给<code>.then()</code>添加的回调函数，同理<code>reject</code>的参数亦会传递给<code>.catch()</code>添加的回调函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function fetchData() &#123;</span><br><span class="line">	return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">		if (/*异步操作成功*/) &#123;</span><br><span class="line">			resolve(1)</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			reject(&apos;error message&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetchData().then((response) =&gt; &#123;</span><br><span class="line">	// success</span><br><span class="line">	console.log(response) </span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	// fail</span><br><span class="line">	console.log(error) </span><br><span class="line">&#125;)</span><br><span class="line">// 1</span><br><span class="line">// error message</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：<code>resolve</code>和<code>reject</code> 并不会终止<code>Promise</code>的函数的执行。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">  resolve(1);</span><br><span class="line">  console.log(2);</span><br><span class="line">&#125;).then(r =&gt; &#123;</span><br><span class="line">  console.log(r);</span><br><span class="line">&#125;);</span><br><span class="line">// 2</span><br><span class="line">// 1</span><br></pre></td></tr></table></figure>
+<h3 id="链式调用"><a href="#链式调用" class="headerlink" title="链式调用"></a>链式调用</h3><p><code>.then()</code> 方法返回的是一个<strong>新的</strong><code>Promise</code>对象（注意不是原来的那个），因此我们可以用链式写法添加多个<code>.then()</code>处理函数，多个<code>.then()</code>会添加顺序依次调用。<code>.then()</code>中传递参数给下一个<code>.then()</code>只需 <code>return</code> 对应的值即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function fetchData() &#123;</span><br><span class="line">	return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">		if (true) &#123;</span><br><span class="line">			resolve(1)</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			reject(&apos;error message&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetchData().then((response) =&gt; &#123;</span><br><span class="line">	// success</span><br><span class="line">	console.log(response) </span><br><span class="line">	return 2</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	console.log(res) </span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	// fail</span><br><span class="line">	console.log(error)</span><br><span class="line">&#125;)</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br></pre></td></tr></table></figure>
+<p>同理，可以链式添加多个<code>.catch()</code>，<code>.catch()</code> 中可以抛出错误被后续的<code>.catch()</code> 捕获。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function fetchData() &#123;</span><br><span class="line">	return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">		if (false) &#123;</span><br><span class="line">			resolve(1)</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			reject(&apos;error message&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetchData().then((response) =&gt; &#123;</span><br><span class="line">	// success</span><br><span class="line">	console.log(response)</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	// fail</span><br><span class="line">	console.log(error)</span><br><span class="line">	y + 1</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	console.log(error)</span><br><span class="line">&#125;)</span><br><span class="line">// error message</span><br><span class="line">// ReferenceError: y is not defined</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：<code>.catch()</code>不仅会捕获<code>reject</code>的错误信息，<code>.then()</code>中出现错误一会被<code>.catch()</code>捕获。</p>
+</blockquote>
+<h3 id="Promise-prototype-finally"><a href="#Promise-prototype-finally" class="headerlink" title="Promise.prototype.finally()"></a><code>Promise.prototype.finally()</code></h3><p><code>.finally()</code>方法用于添加不管<code>Promise</code>状态如何都会执行的操作。<code>.finally()</code>回调函数不接受任何参数，即无法知道<code>Promise</code>的状态是<code>fulfilled</code>还是<code>rejected</code>，故<code>.finally()</code>中的操作不应该包含于状态有关的逻辑。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function fetchData() &#123;</span><br><span class="line">	return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">		if (true) &#123;</span><br><span class="line">			resolve(1)</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			reject(&apos;error message&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetchData().then((response) =&gt; &#123;</span><br><span class="line">	// success</span><br><span class="line">	console.log(response)</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	// fail</span><br><span class="line">	console.log(error)</span><br><span class="line">&#125;).finally(() =&gt; &#123;</span><br><span class="line">	console.log(&apos;finally.........&apos;)</span><br><span class="line">&#125;)</span><br><span class="line">// 1</span><br><span class="line">// finally.........</span><br></pre></td></tr></table></figure>
+<h3 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all()"></a><code>Promise.all()</code></h3><p><code>Promise.all()</code>方法用于将多个 <code>Promise</code> 实例包装成一个<code>Promise</code>实例。<code>Promise.all()</code>接收一个数组作为参数，数组中的元素必须是<code>Promise</code>实例，如果不是会调用<code>Promise.resolve</code>方法将参数转换为<code>Promise</code>实例，再做进一步的处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const p = Promise.all([p1, p2, p3])</span><br></pre></td></tr></table></figure>
+<p>一个简单的例子如上，p1、p2、p3均为<code>Promise</code>实例，p的状态有以下两种情况：</p>
+<ul>
+<li><p>p1、p2、p3 的状态均为<code>fulfilled</code>时，p 的状态才会变成<code>fulfilled</code>，此时p1、p2、p3的返回值组成一个数组传给 p 的<code>.then()</code>回调函数。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">const p1 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	resolve(1)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return `message from p1 $&#123;res&#125;`</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p2 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	resolve(2)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return `message from p2 $&#123;res&#125;`</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p3 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	resolve(3)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return `message from p1 $&#123;res&#125;`</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Promise.all([p1, p2, p3]).then((res) =&gt; &#123;</span><br><span class="line">	console.log(res)</span><br><span class="line">&#125;)</span><br><span class="line">// [ 1, 2, 3]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>p1、p2、p3 中只要有一个状态为<code>rejected</code>，p 的状态就会变成 <code>rejected</code>，此时第一个<code>reject</code>的实例的返回值会传递给 p 的回调函数。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">const p1 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	resolve(1)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p2 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	reject(2)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p3 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	reject(3)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Promise.all([p1, p2, p3]).then((res) =&gt; &#123;</span><br><span class="line">	console.log(res)</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	console.log(error)</span><br><span class="line">&#125;)</span><br><span class="line">// 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>&gt; 注：只有p1、p2、p3中`reject`的按个实例没有`.catch()`方法时才会调用`Promise.all()`的`catch`方法。
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const p1 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	resolve(1)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p2 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	reject(2)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return res</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	console.log(`error occure in p2 $&#123;error&#125;`)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p3 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	reject(3)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Promise.all([p1, p2, p3]).then((res) =&gt; &#123;</span><br><span class="line">	console.log(res)</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	console.log(error)</span><br><span class="line">&#125;)</span><br><span class="line">// error occure in p2 2</span><br><span class="line">// 3</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race()"></a><code>Promise.race()</code></h3><p><code>Promise.race()</code> 与 <code>Promise.all()</code>类似，将多个 Promise 实例，包装成一个新的 <code>Promise</code> 实例。</p>
+<p>不同之处在于，只要参数中有一个实例的状态改变了，<code>Promise.race()</code>的状态就会耕者改变，率先改变的 <code>Promise</code> 实例返回值传递给<code>Promise.race()</code>的回调函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">const p1 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	setTimeout(() =&gt; resolve(1), 2000)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	console.log(&apos;p1 resolved&apos;)</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p2 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	setTimeout(() =&gt; resolve(2), 1000)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	console.log(&apos;p2 resolved&apos;)</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const p3 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">	resolve(3)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">	console.log(&apos;p3 resolved&apos;)</span><br><span class="line">	return res</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Promise.all([p1, p2, p3]).then((res) =&gt; &#123;</span><br><span class="line">	console.log(res)</span><br><span class="line">&#125;).catch((error) =&gt; &#123;</span><br><span class="line">	console.log(error)</span><br><span class="line">&#125;)</span><br><span class="line">// p3 resolved</span><br><span class="line">// 3</span><br><span class="line">// p2 resolved</span><br><span class="line">// p1 resolved</span><br></pre></td></tr></table></figure>
+        
+        <br>
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
