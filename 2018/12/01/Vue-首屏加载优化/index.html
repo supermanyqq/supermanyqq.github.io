@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由懒加载"><span class="toc-text">路由懒加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CDN-优化"><span class="toc-text">CDN 优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gzip-优化"><span class="toc-text">Gzip 优化</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由懒加载"><span class="toc-text">路由懒加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CDN-优化"><span class="toc-text">CDN 优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gzip-优化"><span class="toc-text">Gzip 优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
 </div>
     
 </div>
@@ -151,9 +151,9 @@
 <p>将项目部署在本地 Apache 服务器，禁用浏览器缓存，网速限定为 Slow 3G 首页加载情况如下图：</p>
 <p><img src="/img/p1-0.jpg" alt=""></p>
 <p>如上图，未优化的情况需要12s左右才能加载完成。</p>
-<h2 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h2><p>构建应用过程中生成的 app.js 主要包含项目中的业务代码，随着项目越来越复杂 app.js 文件会变得非常大，严重影响首屏加载速度，显然在首屏加载的时候就把所有的 JavaScript 加载进来是不合理的。</p>
-<p>我们可以结合 Vue 的异步组件和 Webpack 的代码分割功能，实现路由懒加载功能。把不容路由对应的组件分割成不同的代码块，只有当路由被访问的时候才加载对应的组件。</p>
-<p>我们可以通过如下格式定义能够被 Webpack 自动代码分割的异步组件：</p>
+<h2 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h2><p>构建应用过程中生成的 app.js 主要包含项目中的业务代码，随着项目越来越复杂 app.js 文件会变得非常大，严重影响首屏加载速度，显然在首屏加载的时候就把所有的 JavaScript 加载进来也是不合理的。</p>
+<p>我们可以结合 Vue 的异步组件和 Webpack 的代码分割功能，实现路由懒加载功能。把不同路由对应的组件分割成不同的代码块，只有当路由被访问的时候才加载对应的组件，有效减少首屏加载时加载的文件大小。</p>
+<p>我们可以通过如下格式定义能够被 Webpack 自动进行代码分割的异步组件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const Foo = () =&gt; import(/* webpackChunkName: &quot;group-foo&quot; */ &apos;./Foo.vue&apos;)</span><br></pre></td></tr></table></figure>
 <p><code>webpackChunkName</code> 是一个特殊的注释语法(需要 Webpack &gt; 2.4)，为分割后的代码块提供了一个 chunk name，构建应用后 Foo.vue 组件对应的代码块为 group-foo.js。</p>
 <p>为项目添加路由懒加载功能，如下图：</p>
@@ -171,21 +171,23 @@
 <p><img src="/img/p1-5.jpg" alt=""></p>
 <p>从上图可以看到，首屏加载的时候并没有加载 About.vue 组件对应的 1.js 文件，只有在我们访问 <code>/about</code> 路由的时候才会加载。</p>
 <p>由于这个演示项目只是一个空项目 About.vue 只有 450bytes 大小，所以对于首屏加载的速度并没有什么影响，但是在具体的项目中，首页加载时对一些不必要的东西延迟加载，对于首页加载速度来说是很有帮助的。</p>
-<h2 id="CDN-优化"><a href="#CDN-优化" class="headerlink" title="CDN 优化"></a>CDN 优化</h2><ul>
+<h2 id="CDN-优化"><a href="#CDN-优化" class="headerlink" title="CDN 优化"></a>CDN 优化</h2><p>将项目中依赖的第三方库使用 CDN 链接引入，不仅是首屏加载速度上会有较大的提升，且在高并发时大部分的静态资源都请求的第三方的 CDN 资源可以有效减少我们自己服务器的带宽压力。</p>
+<p>以本文的演示项目为例优化步骤如下：</p>
+<ol>
 <li><p>将 vue、vuex、vue-router、mint-ui 和 axios 这五个库全部改为用 CDN 导入。在 HtmlWebpackPlugin 中配置 CDN 链接，然后在 index.html 中用循环语法插入 js 和 css 的 CDN 链接。</p>
-<p>  HtmlWebpackPlugin 配置</p>
-<p>  <img src="/img/p1-6.jpg" alt=""></p>
-<p>  index.html</p>
-<p>  <img src="/img/p1-7.jpg" alt=""></p>
+<p> HtmlWebpackPlugin 配置</p>
+<p> <img src="/img/p1-6.jpg" alt=""></p>
+<p> index.html</p>
+<p> <img src="/img/p1-7.jpg" alt=""></p>
 <blockquote>
 <p>html 中使用 EJS 语法循环插入 CDN 链接，EJS 一套简单的模板语言，帮你利用普通的 JavaScript 代码生成 HTML 页面。更多信息可查看<a href="https://ejs.bootcss.com" target="_blank" rel="noopener">官方文档</a>。</p>
 </blockquote>
 </li>
-</ul>
-<ul>
+</ol>
+<ol start="2">
 <li><p>在 build/webpack.base.conf.js 中添加 <code>externals</code> 不把从 CDN 导入的库打包到 bundle 中，如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">externals: &#123;</span><br><span class="line">   	&apos;vue&apos;: &apos;Vue&apos;,</span><br><span class="line">   	&apos;vue-router&apos;: &apos;VueRouter&apos;,</span><br><span class="line">   	&apos;vuex&apos;: &apos;Vuex&apos;,</span><br><span class="line">   	&apos;axios&apos;:&apos;axios&apos;,</span><br><span class="line">   	&apos;mint-ui&apos;: &apos;MINT&apos;,</span><br><span class="line"> 	&#125;</span><br></pre></td></tr></table></figure>
-<p>  键名是 import 的 npm 包名，键值是该库暴露的全局变量。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">externals: &#123;</span><br><span class="line">   	&apos;vue&apos;: &apos;Vue&apos;,</span><br><span class="line">   	&apos;vue-router&apos;: &apos;VueRouter&apos;,</span><br><span class="line">   	&apos;vuex&apos;: &apos;Vuex&apos;,</span><br><span class="line">   	&apos;axios&apos;:&apos;axios&apos;,</span><br><span class="line">   	&apos;mint-ui&apos;: &apos;MINT&apos;,</span><br><span class="line"> 	&#125;</span><br></pre></td></tr></table></figure>
+<p> 键名是 import 的 npm 包名，键值是该库暴露的全局变量。</p>
 <blockquote>
 <p><code>externals</code> 详细信息可查看官方文档 <a href="https://webpack.js.org/configuration/externals/" target="_blank" rel="noopener">Externals</a>。</p>
 </blockquote>
@@ -194,7 +196,7 @@
 </li>
 <li><p>删除 main.js 中 mint-ui 相关的代码</p>
 </li>
-</ul>
+</ol>
 <p>重新构建一次，优化前后文件对比如下：</p>
 <p>优化后：</p>
 <p><img src="/img/p1-9.jpg" alt=""></p>
@@ -207,9 +209,9 @@
 </ol>
 <p>禁用浏览器缓存，网速限制为 Slow 3G，优化后的首页加载情况如下图：</p>
 <p><img src="/img/p1-11.jpg" alt=""></p>
-<p>与优化之前对比，加载时间从12秒左右减少到了9秒左右，快了25%左右。在实际项目中把第三方库都改成 CDN 链接，不仅是速度上速度上会有较大的提升，且在高并发时大部分的静态资源都请求的是第三方的 CDN 资源，这无疑会减少我们自己服务器的带宽压力。</p>
+<p>与优化之前对比，加载时间从12秒左右减少到了9秒左右，快了25%左右。</p>
 <h2 id="Gzip-优化"><a href="#Gzip-优化" class="headerlink" title="Gzip 优化"></a>Gzip 优化</h2><blockquote>
-<p>本文只讨论 Gzip 前端能做的事情</p>
+<p>开启 Gzip 的方式主要是通过修改服务器配置，本文只讨论 Gzip 前端能做的事情。</p>
 </blockquote>
 <p>使用 Gzip 两个明显的好处，一是可以减少存储空间，二是通过网络传输文件时，可以减少传输的时间。服务器在返回 js 文件的时候，会先判断是否有 .gz 后缀的文件，如果有就直接返回，否则在压缩后返给浏览器，所以我们在 build 的时候做好压缩也就不用占用服务器的 CPU 资源去压缩。</p>
 <p>首先，安装 <code>compression-webpack-plugin</code></p>
@@ -218,6 +220,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">productionGzip: true,</span><br><span class="line">productionGzipExtensions: [&apos;js&apos;, &apos;css&apos;]</span><br></pre></td></tr></table></figure>
 <p>重新 build，可以发现多了一些 .gz 的文件</p>
 <p><img src="/img/p1-12.jpg" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上，总结了我在实践中发现的优化效果较明显的三种方案。优化是无止境的，除了以上的方案以外还有很多地方值得研究。比如，css、js 压缩，小图片转 base64，第三方 UI 组件按需引入，利用 <code>prerender-spa-plugin</code> 插件实现预渲染等等。</p>
 
         
         <br>
