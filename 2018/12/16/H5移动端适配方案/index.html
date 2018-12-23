@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="iOS、前端知识总结">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        H5移动端适配方案 - Qyu&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i>  </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/avatar.jpg">
+        </div>
+        <div class="name">
+            <i>余桥</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li>
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li>
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#viewport"><span class="toc-text">viewport</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#适配方案"><span class="toc-text">适配方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实战：如何在Vue项目中使用vw实现适配"><span class="toc-text">实战：如何在Vue项目中使用vw实现适配</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input">
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i>  </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        H5移动端适配方案
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-12-16 20:22:10</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#Vue" title="Vue">Vue</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+
+    </div>
+    <div class="post-content ">
+        <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="viewport"><a href="#viewport" class="headerlink" title="viewport"></a>viewport</h3><p><code>viewport</code> 指的是浏览器可视化的区域，即 <code>window.innerWidth</code>和 <code>window.innerHeight</code>的大小</p>
+<p>css3 中与 <code>viewport</code> 相关的单位：</p>
+<ul>
+<li><code>vw</code>: 是 viewport’s width 的简写，1vw 等于 <code>window.innerWidth</code> 的1%</li>
+<li><code>vh</code>: 是 viewport’s height 的简写，1vh 等于 <code>window.innerHeight</code> 的1%</li>
+<li><code>vmin</code>: <code>vmin</code> 是当前 <code>vw</code> 和 <code>vh</code> 中较小的值</li>
+<li><code>vmax</code>: <code>vmax</code> 是当前 <code>vw</code> 和 <code>vh</code> 中较大的值 </li>
+</ul>
+<p>如图：</p>
+<p><img src="/img/viewport.png" alt=""></p>
+<p><code>viewport</code> 支持情况：</p>
+<p><img src="/img/support.png" alt=""></p>
+<h2 id="适配方案"><a href="#适配方案" class="headerlink" title="适配方案"></a>适配方案</h2><p>简单来说就是将 <code>px</code> 转换为 <code>vw</code>，用 <code>vw</code> 作为基础单位进行布局，达到在不同移动设备上界面表现一直的效果。如果设计稿使用 <code>750px</code> 的宽度，那么 <code>100vw = 750px</code>，即 <code>1vw = 7.5px</code>。根据这个关系即可将设计图上的 <code>px</code> 转换为 <code>vw</code> 值，所幸这个计算工作有插件 <code>postcss-px-to-viewport</code> 帮我们完成，实际操作中我只需严格按照设计图直接在代码中写 <code>px</code> 即可。</p>
+<h2 id="实战：如何在Vue项目中使用vw实现适配"><a href="#实战：如何在Vue项目中使用vw实现适配" class="headerlink" title="实战：如何在Vue项目中使用vw实现适配"></a>实战：如何在Vue项目中使用vw实现适配</h2><ol>
+<li><p>使用 <code>Vue-cli</code> 构建项目</p>
+<pre><code>vue init webpack my-project
+</code></pre></li>
+<li><p>安装PostCSS插件</p>
+<p> 使用 <code>Vue-cli</code> 构建的项目，在项目根目录下有一个 <code>.postcssrc.js</code> 文件，默认会包含三个插件：</p>
+<pre><code>module.exports = {
+    &quot;plugins&quot;: {
+        &quot;postcss-import&quot;: {},
+        &quot;postcss-url&quot;: {},
+        &quot;autoprefixer&quot;: {}
+    }
+}
+</code></pre><p> <strong>postcss-import</strong></p>
+<p> <code>postcss-import</code> 主要功能是解决 <code>@import</code> 引入路径问题。</p>
+<p> <strong>postcss-url</strong></p>
+<p> <code>postcss-url</code> 主要用来处理文件，比如图片文件、字体文件等引用路径的处理。</p>
+<p> <strong>autoprefixer</strong></p>
+<p> <code>autoprefixer</code> 主要用来自动处理浏览器前缀的问题。</p>
+<p> <strong>实现 <code>vw</code> 布局兼容方案需增加以下插件：</strong></p>
+<p> <strong>postcss-px-to-viewport</strong></p>
+<p> <code>postcss-px-to-viewport</code> 主要用来将 <code>px</code> 单位转换为 <code>vw</code> 、<code>vh</code>、 <code>vmin</code> 或者 <code>vmax</code> 这些 <code>viewport</code> 单位</p>
+<pre><code>npm i postcss-px-to-viewport
+</code></pre><p> <strong>postcss-aspect-ratio-mini</strong></p>
+<p> <code>postcss-aspect-ratio-mini</code> 主要用来处理元素容器宽高比。</p>
+<pre><code>npm i postcss-aspect-ratio-mini
+</code></pre><p> <strong>postcss-cssnext</strong></p>
+<p> <code>postcss-cssnext</code> 可以让我们使用CSS未来的特性，插件会对这些特性做相关的兼容性处理。</p>
+<pre><code>npm i postcss-cssnext
+</code></pre><p> <strong>cssnano</strong></p>
+<p> <code>cssnano</code> 主要用来压缩和清理CSS代码。在 <code>webpack</code> 中， <code>cssnano</code> 和 <code>css-loader</code>捆绑在一起，所以不需要自己加载它。可以使用 <code>postcss-loader</code> 显示的使用 <code>cssnano</code>。</p>
+<p> <strong>postcss-write-svg</strong></p>
+<p> <code>postcss-write-svg</code> 主要用来处理移动端 <code>1px</code> 的解决方案，主要使用 <code>border-image</code> 和 <code>background</code> 来做 <code>1px</code> 的相关处理。比如：</p>
+<pre><code>@svg 1px-border {
+    height: 2px;
+    @rect {
+        fill: var(--color, black);
+        width: 100%;
+        height: 50%;
+    }
+}
+.example {
+    border: 1px solid transparent;
+    border-img: svg(1px-border param(--color #00b1ff)) 2 2 stretch;
+}
+</code></pre><p> 安装</p>
+<pre><code>npm i postcss-write-svg
+</code></pre><p> <strong>postcss-viewport-units</strong></p>
+<p> <code>postcss-viewport-units</code> 主要用来给CSS属性添加 <code>content</code> 属性，配合 <code>viewport-units-buggyfill</code> 库给 <code>vw</code>、<code>vh</code>、<code>vmin</code>、<code>vmax</code>做适配的操作。这是 <code>vw</code> 布局必不可少的一个插件。</p>
+<pre><code>npm i postcss-viewport-units
+</code></pre></li>
+</ol>
+<ol start="3">
+<li><p><code>.postcssrc.js</code> 文件中配置插件</p>
+<pre><code>module.exports = {
+    &quot;plugins&quot;: {
+        &quot;postcss-import&quot;: {},
+        &quot;postcss-url&quot;: {},
+        &quot;autoprefixer&quot;: {}
+        &quot;postcss-aspect-ratio-mini&quot;: {},
+        &quot;postcss-write-svg&quot;: {
+            utf8: false
+        },
+        &quot;postcss-cssnext&quot;: {},
+        &quot;postcss-px-to-viewport&quot;: {
+            viewportWidth: 375, // 视窗的宽度，对应设计稿的宽度
+            viewportHeight: 1334, // 视窗高度，可不配置
+            unitPrecision: 5, // 指定 &apos;px&apos; 转换为视窗单位值的小数位数
+            viewportUnit: &apos;vw&apos;, // 指定需要转换成的视窗单位
+            selectorBlackList: [&apos;.ignore&apos;], // 指定不转换为视窗单位的类，可自定义，可无限添加
+            minPixelValue: 1, // 小于或等于 &apos;1px&apos; 不转换为视窗单位
+            mediaQuery: false // 是否允许媒体查询中转换 &apos;px&apos;
+            },
+        &quot;postcss-viewport-units&quot;: {},
+        &quot;cssnano&quot;: {
+            preset: &quot;advanced&quot;,
+            autoprefixer: false,
+            &quot;postcss-zindex&quot;: false
+        }
+    }
+}
+</code></pre><p> 在 <code>cssnano</code> 的配置中，使用了preset: “advanced”，所以我们需要另外安装：</p>
+<pre><code>npm i cssnano-preset-advanced --save-dev
+</code></pre></li>
+</ol>
+<pre><code>只要启用了`cssnano`这个插件，`z-index`的值就会重置为1。**切记**将`postcss-zindex`设置为false。
+
+
+`postcss-px-to-viewport` 中配置了 `selectorBlackList`，在不想把 `px` 转换为 `vw` 的时候，可以将 `px` 写在 `selectorBlackList ` 中定义的某个方法中，然后将改方法应用的对应的 `html` 元素上，如下：
+
+    // html
+    &lt;div calss=&quot;box ignore&quot;&gt;&lt;/div&gt;
+
+    // css
+    .box {
+        width: 180px;
+        height: 300px;
+    }
+    .ignore {
+        margin: 10px;
+    }
+
+
+    // 编译后的CSS
+
+    .box {
+        width: 24vw;
+        height: 40vw;
+    }
+    .ignore {
+        margin: 10px; // 这个类名中写的`px`不会被转换
+    }
+</code></pre><ol start="4">
+<li>大功告成，按照设计稿写 <code>px</code> 即可完成适配工作。</li>
+</ol>
+
+        
+        <br>
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
