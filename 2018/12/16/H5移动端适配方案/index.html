@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#viewport"><span class="toc-text">viewport</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#适配方案"><span class="toc-text">适配方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实战：如何在Vue项目中使用vw实现适配"><span class="toc-text">实战：如何在Vue项目中使用vw实现适配</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#viewport"><span class="toc-text">viewport</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#适配方案"><span class="toc-text">适配方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实战：如何在Vue项目中使用vw实现适配"><span class="toc-text">实战：如何在Vue项目中使用vw实现适配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-使用-Vue-cli-构建项目"><span class="toc-text">Step 1 使用 Vue-cli 构建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-安装PostCSS插件"><span class="toc-text">Step 2 安装PostCSS插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step4-大功告成，按照设计稿写-px-即可完成适配工作。"><span class="toc-text">Step4 大功告成，按照设计稿写 px 即可完成适配工作。</span></a></li></ol></li></ol>
 </div>
     
 </div>
@@ -150,122 +150,66 @@
 <p><code>viewport</code> 支持情况：</p>
 <p><img src="/img/support.png" alt=""></p>
 <h2 id="适配方案"><a href="#适配方案" class="headerlink" title="适配方案"></a>适配方案</h2><p>简单来说就是将 <code>px</code> 转换为 <code>vw</code>，用 <code>vw</code> 作为基础单位进行布局，达到在不同移动设备上界面表现一直的效果。如果设计稿使用 <code>750px</code> 的宽度，那么 <code>100vw = 750px</code>，即 <code>1vw = 7.5px</code>。根据这个关系即可将设计图上的 <code>px</code> 转换为 <code>vw</code> 值，所幸这个计算工作有插件 <code>postcss-px-to-viewport</code> 帮我们完成，实际操作中我只需严格按照设计图直接在代码中写 <code>px</code> 即可。</p>
-<h2 id="实战：如何在Vue项目中使用vw实现适配"><a href="#实战：如何在Vue项目中使用vw实现适配" class="headerlink" title="实战：如何在Vue项目中使用vw实现适配"></a>实战：如何在Vue项目中使用vw实现适配</h2><ol>
-<li><p>使用 <code>Vue-cli</code> 构建项目</p>
-<pre><code>vue init webpack my-project
-</code></pre></li>
-<li><p>安装PostCSS插件</p>
-<p> 使用 <code>Vue-cli</code> 构建的项目，在项目根目录下有一个 <code>.postcssrc.js</code> 文件，默认会包含三个插件：</p>
-<pre><code>module.exports = {
-    &quot;plugins&quot;: {
-        &quot;postcss-import&quot;: {},
-        &quot;postcss-url&quot;: {},
-        &quot;autoprefixer&quot;: {}
-    }
-}
-</code></pre><p> <strong>postcss-import</strong></p>
-<p> <code>postcss-import</code> 主要功能是解决 <code>@import</code> 引入路径问题。</p>
-<p> <strong>postcss-url</strong></p>
-<p> <code>postcss-url</code> 主要用来处理文件，比如图片文件、字体文件等引用路径的处理。</p>
-<p> <strong>autoprefixer</strong></p>
-<p> <code>autoprefixer</code> 主要用来自动处理浏览器前缀的问题。</p>
-<p> <strong>实现 <code>vw</code> 布局兼容方案需增加以下插件：</strong></p>
-<p> <strong>postcss-px-to-viewport</strong></p>
-<p> <code>postcss-px-to-viewport</code> 主要用来将 <code>px</code> 单位转换为 <code>vw</code> 、<code>vh</code>、 <code>vmin</code> 或者 <code>vmax</code> 这些 <code>viewport</code> 单位</p>
-<pre><code>npm i postcss-px-to-viewport
-</code></pre><p> <strong>postcss-aspect-ratio-mini</strong></p>
-<p> <code>postcss-aspect-ratio-mini</code> 主要用来处理元素容器宽高比。</p>
-<pre><code>npm i postcss-aspect-ratio-mini
-</code></pre><p> <strong>postcss-cssnext</strong></p>
-<p> <code>postcss-cssnext</code> 可以让我们使用CSS未来的特性，插件会对这些特性做相关的兼容性处理。</p>
-<pre><code>npm i postcss-cssnext
-</code></pre><p> <strong>cssnano</strong></p>
-<p> <code>cssnano</code> 主要用来压缩和清理CSS代码。在 <code>webpack</code> 中， <code>cssnano</code> 和 <code>css-loader</code>捆绑在一起，所以不需要自己加载它。可以使用 <code>postcss-loader</code> 显示的使用 <code>cssnano</code>。</p>
-<p> <strong>postcss-write-svg</strong></p>
-<p> <code>postcss-write-svg</code> 主要用来处理移动端 <code>1px</code> 的解决方案，主要使用 <code>border-image</code> 和 <code>background</code> 来做 <code>1px</code> 的相关处理。比如：</p>
-<pre><code>@svg 1px-border {
-    height: 2px;
-    @rect {
-        fill: var(--color, black);
-        width: 100%;
-        height: 50%;
-    }
-}
-.example {
-    border: 1px solid transparent;
-    border-img: svg(1px-border param(--color #00b1ff)) 2 2 stretch;
-}
-</code></pre><p> 安装</p>
-<pre><code>npm i postcss-write-svg
-</code></pre><p> <strong>postcss-viewport-units</strong></p>
-<p> <code>postcss-viewport-units</code> 主要用来给CSS属性添加 <code>content</code> 属性，配合 <code>viewport-units-buggyfill</code> 库给 <code>vw</code>、<code>vh</code>、<code>vmin</code>、<code>vmax</code>做适配的操作。这是 <code>vw</code> 布局必不可少的一个插件。</p>
-<pre><code>npm i postcss-viewport-units
-</code></pre></li>
-</ol>
-<ol start="3">
-<li><p><code>.postcssrc.js</code> 文件中配置插件</p>
+<h2 id="实战：如何在Vue项目中使用vw实现适配"><a href="#实战：如何在Vue项目中使用vw实现适配" class="headerlink" title="实战：如何在Vue项目中使用vw实现适配"></a>实战：如何在Vue项目中使用vw实现适配</h2><h3 id="Step-1-使用-Vue-cli-构建项目"><a href="#Step-1-使用-Vue-cli-构建项目" class="headerlink" title="Step 1 使用 Vue-cli 构建项目"></a>Step 1 使用 <code>Vue-cli</code> 构建项目</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack my-project</span><br></pre></td></tr></table></figure>
+<h3 id="Step-2-安装PostCSS插件"><a href="#Step-2-安装PostCSS插件" class="headerlink" title="Step 2 安装PostCSS插件"></a>Step 2 安装PostCSS插件</h3><pre><code>使用 `Vue-cli` 构建的项目，在项目根目录下有一个 `.postcssrc.js` 文件，默认会包含三个插件：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	&quot;plugins&quot;: &#123;</span><br><span class="line">		&quot;postcss-import&quot;: &#123;&#125;,</span><br><span class="line">		&quot;postcss-url&quot;: &#123;&#125;,</span><br><span class="line">		&quot;autoprefixer&quot;: &#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>postcss-import</strong></p>
+<p><code>postcss-import</code> 主要功能是解决 <code>@import</code> 引入路径问题。</p>
+<p><strong>postcss-url</strong></p>
+<p><code>postcss-url</code> 主要用来处理文件，比如图片文件、字体文件等引用路径的处理。</p>
+<p><strong>autoprefixer</strong></p>
+<p><code>autoprefixer</code> 主要用来自动处理浏览器前缀的问题。</p>
+<p><strong>实现 <code>vw</code> 布局兼容方案需增加以下插件：</strong></p>
+<p><strong>postcss-px-to-viewport</strong></p>
+<p><code>postcss-px-to-viewport</code> 主要用来将 <code>px</code> 单位转换为 <code>vw</code> 、<code>vh</code>、 <code>vmin</code> 或者 <code>vmax</code> 这些 <code>viewport</code> 单位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm i postcss-px-to-viewport</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">**postcss-aspect-ratio-mini**</span><br><span class="line">	</span><br><span class="line">`postcss-aspect-ratio-mini` 主要用来处理元素容器宽高比。</span><br><span class="line"></span><br><span class="line">```	</span><br><span class="line">	npm i postcss-aspect-ratio-mini</span><br></pre></td></tr></table></figure>
+<p><strong>postcss-cssnext</strong></p>
+<p><code>postcss-cssnext</code> 可以让我们使用CSS未来的特性，插件会对这些特性做相关的兼容性处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i postcss-cssnext</span><br></pre></td></tr></table></figure>
+<p><strong>cssnano</strong></p>
+<p><code>cssnano</code> 主要用来压缩和清理CSS代码。在 <code>webpack</code> 中， <code>cssnano</code> 和 <code>css-loader</code>捆绑在一起，所以不需要自己加载它。可以使用 <code>postcss-loader</code> 显示的使用 <code>cssnano</code>。</p>
+<p><strong>postcss-write-svg</strong></p>
+<p><code>postcss-write-svg</code> 主要用来处理移动端 <code>1px</code> 的解决方案，主要使用 <code>border-image</code> 和 <code>background</code> 来做 <code>1px</code> 的相关处理。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@svg 1px-border &#123;</span><br><span class="line">	height: 2px;</span><br><span class="line">	@rect &#123;</span><br><span class="line">		fill: var(--color, black);</span><br><span class="line">		width: 100%;</span><br><span class="line">		height: 50%;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">.example &#123;</span><br><span class="line">	border: 1px solid transparent;</span><br><span class="line">	border-img: svg(1px-border param(--color #00b1ff)) 2 2 stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm i postcss-write-svg</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">**postcss-viewport-units**</span><br><span class="line">	</span><br><span class="line">`postcss-viewport-units` 主要用来给CSS属性添加 `content` 属性，配合 `viewport-units-buggyfill` 库给 `vw`、`vh`、`vmin`、`vmax`做适配的操作。这是 `vw` 布局必不可少的一个插件。</span><br></pre></td></tr></table></figure>
+<p>npm i postcss-viewport-units<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">		</span><br><span class="line">###  Step 3 `.postcssrc.js` 文件中配置插件</span><br></pre></td></tr></table></figure></p>
 <pre><code>module.exports = {
     &quot;plugins&quot;: {
         &quot;postcss-import&quot;: {},
         &quot;postcss-url&quot;: {},
         &quot;autoprefixer&quot;: {}
         &quot;postcss-aspect-ratio-mini&quot;: {},
-        &quot;postcss-write-svg&quot;: {
-            utf8: false
-        },
-        &quot;postcss-cssnext&quot;: {},
-        &quot;postcss-px-to-viewport&quot;: {
-            viewportWidth: 375, // 视窗的宽度，对应设计稿的宽度
-            viewportHeight: 1334, // 视窗高度，可不配置
-            unitPrecision: 5, // 指定 &apos;px&apos; 转换为视窗单位值的小数位数
-            viewportUnit: &apos;vw&apos;, // 指定需要转换成的视窗单位
-            selectorBlackList: [&apos;.ignore&apos;], // 指定不转换为视窗单位的类，可自定义，可无限添加
-            minPixelValue: 1, // 小于或等于 &apos;1px&apos; 不转换为视窗单位
-            mediaQuery: false // 是否允许媒体查询中转换 &apos;px&apos;
-            },
-        &quot;postcss-viewport-units&quot;: {},
-        &quot;cssnano&quot;: {
-            preset: &quot;advanced&quot;,
-            autoprefixer: false,
-            &quot;postcss-zindex&quot;: false
-        }
+           &quot;postcss-write-svg&quot;: {
+               utf8: false
+           },
+           &quot;postcss-cssnext&quot;: {},
+           &quot;postcss-px-to-viewport&quot;: {
+               viewportWidth: 375, // 视窗的宽度，对应设计稿的宽度
+               viewportHeight: 1334, // 视窗高度，可不配置
+               unitPrecision: 5, // 指定 &apos;px&apos; 转换为视窗单位值的小数位数
+               viewportUnit: &apos;vw&apos;, // 指定需要转换成的视窗单位
+               selectorBlackList: [&apos;.ignore&apos;], // 指定不转换为视窗单位的类，可自定义，可无限添加
+               minPixelValue: 1, // 小于或等于 &apos;1px&apos; 不转换为视窗单位
+               mediaQuery: false // 是否允许媒体查询中转换 &apos;px&apos;
+               },
+           &quot;postcss-viewport-units&quot;: {},
+           &quot;cssnano&quot;: {
+               preset: &quot;advanced&quot;,
+               autoprefixer: false,
+               &quot;postcss-zindex&quot;: false
+           }
     }
 }
-</code></pre><p> 在 <code>cssnano</code> 的配置中，使用了preset: “advanced”，所以我们需要另外安装：</p>
-<pre><code>npm i cssnano-preset-advanced --save-dev
-</code></pre></li>
-</ol>
-<pre><code>只要启用了`cssnano`这个插件，`z-index`的值就会重置为1。**切记**将`postcss-zindex`设置为false。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">		</span><br><span class="line">在 `cssnano` 的配置中，使用了preset: &quot;advanced&quot;，所以我们需要另外安装：</span><br></pre></td></tr></table></figure>
+<p>npm i cssnano-preset-advanced –save-dev<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">		</span><br><span class="line">只要启用了`cssnano`这个插件，`z-index`的值就会重置为1。**切记**将`postcss-zindex`设置为false。</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">`postcss-px-to-viewport` 中配置了 `selectorBlackList`，在不想把 `px` 转换为 `vw` 的时候，可以将 `px` 写在 `selectorBlackList ` 中定义的某个方法中，然后将改方法应用的对应的 `html` 元素上，如下：</span><br></pre></td></tr></table></figure></p>
+<p>// html</p>
+<div calss="box ignore"></div>
 
-
-`postcss-px-to-viewport` 中配置了 `selectorBlackList`，在不想把 `px` 转换为 `vw` 的时候，可以将 `px` 写在 `selectorBlackList ` 中定义的某个方法中，然后将改方法应用的对应的 `html` 元素上，如下：
-
-    // html
-    &lt;div calss=&quot;box ignore&quot;&gt;&lt;/div&gt;
-
-    // css
-    .box {
-        width: 180px;
-        height: 300px;
-    }
-    .ignore {
-        margin: 10px;
-    }
-
-
-    // 编译后的CSS
-
-    .box {
-        width: 24vw;
-        height: 40vw;
-    }
-    .ignore {
-        margin: 10px; // 这个类名中写的`px`不会被转换
-    }
-</code></pre><ol start="4">
-<li>大功告成，按照设计稿写 <code>px</code> 即可完成适配工作。</li>
-</ol>
-
+<p>// css<br>.box {<br>    width: 180px;<br>    height: 300px;<br>}<br>.ignore {<br>    margin: 10px;<br>}</p>
+<p>// 编译后的CSS</p>
+<p>.box {<br>    width: 24vw;<br>    height: 40vw;<br>}<br>.ignore {<br>    margin: 10px; // 这个类名中写的<code>px</code>不会被转换<br>}<br><code>`</code>    </p>
+<h3 id="Step4-大功告成，按照设计稿写-px-即可完成适配工作。"><a href="#Step4-大功告成，按照设计稿写-px-即可完成适配工作。" class="headerlink" title="Step4 大功告成，按照设计稿写 px 即可完成适配工作。"></a>Step4 大功告成，按照设计稿写 <code>px</code> 即可完成适配工作。</h3>
         
         <br>
         <div id="comment-container">
